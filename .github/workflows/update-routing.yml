@@ -12,11 +12,11 @@ jobs:
 
       - name: Update Routing Policy Action
         run: |
-          content=$(cat ${{ github.workspace }}/policies/routing/routing.json | jq)
-          update_status=$(curl -o /dev/null -s -w "%{http_code}" --location --request PUT "${{ vars.baseURL }}/policyActions/253cae74-0a0e-4f52-95ba-84f7c3b067ce" -H "Authorization: ${{ secrets.basicAuth }}" -H "Content-Type: application/json" -d "$content")
+          content=$(cat ${{ github.workspace }}/analysts-studio-petstore/Policies/routing/routing.json | jq)
+          update_status=$(curl -o /dev/null -s -w "%{http_code}" --location --request PUT "${{ vars.baseURL }}/policyActions/4ac5f262-0776-480e-b94d-1887c324840c" -H "Authorization: ${{ secrets.basicAuth }}" -H "Content-Type: application/json" -d '{"policyAction":$content}')
           
           if [ "${update_status}" == "200" ]; then
-            echo "API updated successfully."
+            echo "Routing policy action updated successfully."
           else
-            echo "Unable to update API."
+            echo "Unable to update routing policy action."
           fi
