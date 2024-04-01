@@ -14,7 +14,7 @@ jobs:
         id: create-iam
         run: |
           content=$(cat "${{ github.workspace }}/analysts-studio-petstore/Policies/identify & access/iam.json" | jq)
-          create_status_code=$(curl -o /dev/null -s -w "%{http_code}" --location --request POST "${{ vars.baseURL }}/policyActions" -H "Authorization: ${{ secrets.basicAuth }}" -H "Content-Type: application/json" -d '{"policyAction":$content}') > ./response.json
+          create_status_code=$(curl -o /dev/null -s -w "%{http_code}" --location --request POST "${{ vars.baseURL }}/policyActions" -H "Authorization: ${{ secrets.basicAuth }}" -H "Content-Type: application/json" -d "{\"policyAction\": \"$content\"}") > ./response.json
           
           if [ "${create_status_code}" == "201" ]; then
             echo "IAM Policy Action created successfully."
