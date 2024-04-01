@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create IAM Policy Action
-        id: create-iam
+        id: createIAM
         run: |
           content=$(cat "${{ github.workspace }}/analysts-studio-petstore/Policies/identify & access/iam.json" | jq)
           create_status_code=$(curl -o ./response.json -s -w "%{http_code}" --location --request POST "${{ vars.baseURL }}/policyActions" -H "Authorization: ${{ secrets.basicAuth }}" -H "Content-Type: application/json" -d "{\"policyAction\": $content}")
@@ -30,8 +30,8 @@ jobs:
 
       - name: Add IAM to Policy
         run: |
-          echo $steps.create-iam.outputs.policyActionId
-          update_status=$(curl -o /dev/null -s -w "%{http_code}" --location --request PUT "${{ vars.baseURL }}/policies/dea0248f-edb1-48d2-8d0d-8374c9f99761" -H "Authorization: ${{ secrets.basicAuth }}" -H "Content-Type: application/json" -d '{"policy":{"names":[{"value":"Default Policy for API analysts-studio-petstore","locale":"English"}],"descriptions":[{"value":"","locale":"English"}],"scope":{"scopeConditions":[]},"policyEnforcements":[{"enforcements":[{"enforcementObjectId":"4ac5f262-0776-480e-b94d-1887c324840c","order":"0"}],"stageKey":"routing"},{"enforcements":[{"enforcementObjectId": $steps.create-iam.outputs.policyActionId ,"order":"0"}],"stageKey":"IAM"},{"enforcements":[{"enforcementObjectId":"83e59dc2-9319-40ad-84ab-62ff893984e4","order":"0"}],"stageKey":"transport"}],"policyScope":"SERVICE","systemPolicy":false,"global":false,"active":false}}')
+          echo ${{ steps.createIAM.outputs.policyActionId }}
+          update_status=$(curl -o /dev/null -s -w "%{http_code}" --location --request PUT "${{ vars.baseURL }}/policies/dea0248f-edb1-48d2-8d0d-8374c9f99761" -H "Authorization: ${{ secrets.basicAuth }}" -H "Content-Type: application/json" -d '{"policy":{"names":[{"value":"Default Policy for API analysts-studio-petstore","locale":"English"}],"descriptions":[{"value":"","locale":"English"}],"scope":{"scopeConditions":[]},"policyEnforcements":[{"enforcements":[{"enforcementObjectId":"4ac5f262-0776-480e-b94d-1887c324840c","order":"0"}],"stageKey":"routing"},{"enforcements":[{"enforcementObjectId": ${{ steps.createIAM.outputs.policyActionId }} ,"order":"0"}],"stageKey":"IAM"},{"enforcements":[{"enforcementObjectId":"83e59dc2-9319-40ad-84ab-62ff893984e4","order":"0"}],"stageKey":"transport"}],"policyScope":"SERVICE","systemPolicy":false,"global":false,"active":false}}')
           
           if [ "${update_status}" == "200" ]; then
             echo "Policy updated successfully."
