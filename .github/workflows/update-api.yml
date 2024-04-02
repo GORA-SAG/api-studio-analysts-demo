@@ -28,7 +28,7 @@ jobs:
 
       - name: Update API
         run: |
-          update_status=$(curl -o /dev/null -s -w "%{http_code}" --location --request PUT "${{ vars.baseURL }}/apis/72dc6ea1-47e9-43a6-a544-3c4d9316285b?overwriteTags=null" -F type=openapi -F file=@"${{github.workspace}}/analysts-studio-petstore/APIs/petstore.json" -F apiName="postman-petstore"  -H "Authorization: ${{ secrets.basicAuth }}")      
+          update_status=$(curl -o /dev/null -s -w "%{http_code}" --location --request PUT "${{ vars.baseURL }}/apis/72dc6ea1-47e9-43a6-a544-3c4d9316285b?overwriteTags=null" -F type=openapi -F file=@"${{github.workspace}}/analysts-studio-petstore/APIs/petstore.json" -F apiName="analysts-studio-petstore"  -H "Authorization: ${{ secrets.basicAuth }}")      
 
           if [ "${update_status}" == "200" ]; then
             echo "API updated successfully."
