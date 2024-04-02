@@ -16,7 +16,7 @@
         {
             "templateKey": "endpointUri",
             "values": [
-                "/api/v3/${sys:resource_path}"
+                "https://petstore3.swagger.io/api/v3/${sys:resource_path}"
             ]
         }
     ],
