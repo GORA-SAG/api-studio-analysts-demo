@@ -3,6 +3,10 @@ name: Update Transport Policy Action
 on:
   workflow_dispatch:
 
+  push:
+    paths:
+      - "analysts-studio-petstore/Policies/transport/protocol.json"
+
 jobs:
   update-transport-policy-action:
     runs-on: [analysts-demo]

@@ -3,6 +3,10 @@ name: Create IAM Policy Action
 on:
   workflow_dispatch:
 
+  push:
+    paths:
+      - "analysts-studio-petstore/Policies/identify & access/iam.json"
+
 jobs:
   create-iam-policy-action:
     runs-on: [analysts-demo]

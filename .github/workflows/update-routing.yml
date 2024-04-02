@@ -3,6 +3,10 @@ name: Update Routing Policy Action
 on:
   workflow_dispatch:
 
+  push:
+    paths:
+      - "analysts-studio-petstore/Policies/routing/routing.json"
+
 jobs:
   update-routing-policy-action:
     runs-on: [analysts-demo]
