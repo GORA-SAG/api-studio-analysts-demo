@@ -16,7 +16,7 @@ jobs:
 
       - name: Update IAM Policy Action
         run: |
-          content=$(cat ${{ github.workspace }}/analysts-studio-petstore/Policies/identify & access (1)/iam.json | jq)
+          content=$(cat "${{ github.workspace }}/analysts-studio-petstore/Policies/identify & access (1)/iam.json" | jq)
           update_status=$(curl -o /dev/null -s -w "%{http_code}" --location --request PUT "${{ vars.baseURL }}/policyActions/509a4b61-9fa2-49cf-b617-62eccfcd5954" -H "Authorization: ${{ secrets.basicAuth }}" -H "Content-Type: application/json" -d "{\"policyAction\": $content}")
           
           if [ "${update_status}" == "200" ]; then

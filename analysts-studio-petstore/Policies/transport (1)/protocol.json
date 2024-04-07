@@ -16,7 +16,8 @@
         {
             "templateKey": "protocol",
             "values": [
-                "http"
+                "http",
+				"https"
             ]
         }
     ],
