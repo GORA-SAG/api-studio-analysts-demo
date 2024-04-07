@@ -5,7 +5,7 @@ on:
 
   push:
     paths:
-      - "analysts-studio-petstore/Policies/transport/protocol.json"
+      - "analysts-studio-petstore/Policies/transport (1)/protocol.json"
 
 jobs:
   update-transport-policy-action:
@@ -16,7 +16,7 @@ jobs:
 
       - name: Update Transport Policy Action
         run: |
-          content=$(cat ${{ github.workspace }}/analysts-studio-petstore/Policies/transport/protocol.json | jq)
+          content=$(cat ${{ github.workspace }}/analysts-studio-petstore/Policies/transport (1)/protocol.json | jq)
           update_status=$(curl -o /dev/null -s -w "%{http_code}" --location --request PUT "${{ vars.baseURL }}/policyActions/83e59dc2-9319-40ad-84ab-62ff893984e4" -H "Authorization: ${{ secrets.basicAuth }}" -H "Content-Type: application/json" -d "{\"policyAction\": $content}")
           
           if [ "${update_status}" == "200" ]; then
