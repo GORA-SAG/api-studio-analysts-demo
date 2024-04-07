@@ -16,7 +16,7 @@
     {
       "templateKey": "allowAnonymous",
       "values": [
-        "false"
+        "true"
       ]
     },
     {
