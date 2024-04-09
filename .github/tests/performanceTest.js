@@ -11,7 +11,7 @@ export let options = {
 };
 
 export default function() {
-  http.get(`https://analystsdemo.apigw-aw-eu.webmethods.io/gateway/analysts-studio-petstore/1.0.6/pet/findByStatus?status=sold`)	
+  http.get(`http://analystsdemo.apigw-aw-eu.webmethods.io/gateway/analysts-studio-petstore/1.0.6/pet/findByStatus?status=sold`)	
   sleep(3);
 };
 
