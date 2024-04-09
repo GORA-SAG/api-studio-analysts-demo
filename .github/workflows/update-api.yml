@@ -47,3 +47,25 @@ jobs:
           else
             echo "Unable to activate API."
           fi
+
+      - name: Run fuctional tests
+        run: |
+          cd .github/tests
+          k6 run functionalTest.js
+
+      - name: Report results
+        if: always()
+        run: |
+          mkdir results 
+          cp tests/summary-functional.html results
+
+      - name: Upload Dev functional test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Dev-functional-test-results
+          path: "results/*"
+
+      - name: Promote to QA
+        run: |
+          curl -X POST -d '{"description": "Promotion Set to promote to QA environment","name":"PromoteToTest","destinationStages": ["f43f0fba-2ecd-4846-855e-b0de75f57eb0"],"promotedAssets": {"api": ["72dc6ea1-47e9-43a6-a544-3c4d9316285b"]}}' -H "Content-Type: application/json" -H "Authorization: ${{ secrets.basicAuth }}" ${{ vars.baseURL }}/promotion
