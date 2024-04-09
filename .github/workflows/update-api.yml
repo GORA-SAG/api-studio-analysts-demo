@@ -63,3 +63,33 @@ jobs:
       - name: Promote to QA
         run: |
           curl -X POST -d '{"description": "Promotion Set to promote to QA environment","name":"PromoteToTest","destinationStages": ["f43f0fba-2ecd-4846-855e-b0de75f57eb0"],"promotedAssets": {"api": ["72dc6ea1-47e9-43a6-a544-3c4d9316285b"]}}' -H "Content-Type: application/json" -H "Authorization: ${{ secrets.basicAuth }}" ${{ vars.baseURL }}/promotion
+
+  qa_suite:
+    runs-on: [analysts-demo]
+    needs: update-and-promote-api
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run fuctional tests
+        run: |
+          cd ${{github.workspace}}/.github/tests
+          k6 run functionalTest.js
+
+      - name: Run Performance tests
+        run: |
+          cd ${{github.workspace}}/.github/tests
+          k6 run performanceTest.js
+
+      - name: Upload QA test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: QA-test-results
+          path: |
+            "${{github.workspace}}/.github/tests/summary.html"
+            "${{github.workspace}}/.github/tests/summary-functional.html"
+
+      - name: Promote to Prod Gateway
+        run: |
+          curl -X POST -d '{"description": "Promotion Set to promote to Prod environment","name":"PromoteToProd","destinationStages": ["71cf4ef0-db64-4dc1-a921-c212d4f3fc09"],"promotedAssets": {"api": ["72dc6ea1-47e9-43a6-a544-3c4d9316285b"]}}' -H "Content-Type: application/json" -H "Authorization: Basic YW5hbHlzdHNfZGVtbzp4d2VARFdKMHdjaDZxcmcqd3hx" https://demofreeforever.apigw-aw-eu.webmethods.io/rest/apigateway/promotion
