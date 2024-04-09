@@ -1,4 +1,4 @@
-name: Update API
+name: Update and Promote API
 
 on:
   workflow_dispatch:
