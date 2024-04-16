@@ -2,7 +2,7 @@
 	"openapi": "3.0.2",
 	"info": {
 		"title": "Swagger Petstore - OpenAPI 3.0",
-		"description": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification. Override assets test.",
+		"description": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification. 17th April changes.",
 		"termsOfService": "http://swagger.io/terms/",
 		"contact": {
 			"email": "apiteam@swagger.io"
@@ -348,7 +348,7 @@
 					"pet"
 				],
 				"summary": "Updates a pet in the store with form data",
-				"description": "",
+				"description": "Update the description",
 				"operationId": "updatePetWithForm",
 				"parameters": [
 					{
@@ -379,7 +379,9 @@
 					}
 				],
 				"responses": {
-					"405": {
+					"200": {
+						"description": "OK"
+					},					"405": {
 						"description": "Invalid input"
 					}
 				},
@@ -991,30 +993,6 @@
 					"name": "order"
 				}
 			},
-			"Address": {
-				"type": "object",
-				"properties": {
-					"street": {
-						"type": "string",
-						"example": "437 Lytton"
-					},
-					"city": {
-						"type": "string",
-						"example": "Palo Alto"
-					},
-					"state": {
-						"type": "string",
-						"example": "CA"
-					},
-					"zip": {
-						"type": "string",
-						"example": "94301"
-					}
-				},
-				"xml": {
-					"name": "address"
-				}
-			},
 			"Category": {
 				"type": "object",
 				"properties": {
@@ -1177,14 +1155,11 @@
 					}
 				}
 			},
-			"basic_auth": {
-				"type": "http",
-				"scheme": "basic"
-			},
-			"oauth": {
-				"type": "http",
-				"scheme": "oauth"
-			}
+            "api_key": {
+                "type": "apiKey",
+                "name": "api_key",
+                "in": "header"
+            }
 		}
 	}
 }
